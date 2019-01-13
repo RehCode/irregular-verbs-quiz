@@ -13,7 +13,7 @@ class App extends Component {
   render() {
     return (
       <div className="entrys">
-        <Entry/><Entry/><Entry/>
+        <Entry word={"get"} clue={true}/><Entry word={"got"}/><Entry word={"gotten"}/> 
       </div>
     );
   }
@@ -31,7 +31,7 @@ class Entry extends Component {
 
   handleChange(event) {
     this.setState({ entry_value: event.target.value });
-    if (event.target.value.toLowerCase() === "hello") {
+    if (event.target.value.toLowerCase() === this.props.word) {
       this.setState({ bgColor: "greenyellow" });
     } else {
       this.setState({ bgColor: "darkgrey" });
@@ -39,13 +39,18 @@ class Entry extends Component {
   }
 
   render() {
+
     return (
+
           <input 
             className="reactEntry"
             type='text'
-            value={this.state.entry_value}
+            value={this.props.clue ? this.props.word: this.state.entry_value}
             onChange={this.handleChange}
-            style={{backgroundColor: this.state.bgColor}}/>
+            style={{backgroundColor: this.state.bgColor}}
+            readOnly={this.props.clue ? true : false}
+            />
+            
     );
   }
 }
