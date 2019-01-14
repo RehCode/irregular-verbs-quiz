@@ -7,6 +7,9 @@
   height: 40vmin;
 }
 
+body {
+  background-color: beige;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -36,11 +39,6 @@ input {
   background-color: cornsilk;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h2 {
+  text-align: center;
 }
