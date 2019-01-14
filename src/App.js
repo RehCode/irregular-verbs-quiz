@@ -62,11 +62,11 @@ class EntryRow extends Component {
     return (
       <div className="entrys">
         <Entry word={words_list[this.props.wordIndex][0]}
-               clue={this.props.clue == 0 ? true : false}/>
+               clue={this.props.clue === 0 ? true : false}/>
         <Entry word={words_list[this.props.wordIndex][1]} 
-               clue={this.props.clue == 1 ? true : false}/>
+               clue={this.props.clue === 1 ? true : false}/>
         <Entry word={words_list[this.props.wordIndex][2]} 
-               clue={this.props.clue == 2 ? true : false}/> 
+               clue={this.props.clue === 2 ? true : false}/> 
       </div>
     );
   }
