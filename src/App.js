@@ -104,6 +104,7 @@ class Entry extends Component {
             onChange={this.handleChange}
             style={{backgroundColor: this.state.bgColor}}
             readOnly={this.props.clue ? true : false}
+            disabled={this.props.clue ? true : false}
             />
             
     );
