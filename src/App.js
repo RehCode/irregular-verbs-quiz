@@ -9,7 +9,7 @@ class App extends Component {
       entry_value: "",
       text: "",
     };
-    this.totalWords = words_list.length;
+    this.totalTimeWords = words_list.length;
     this.getRandomIntInclusive = this.getRandomIntInclusive.bind(this);
     this.getWordIndex = this.getWordIndex.bind(this);
     this.getClueIndex = this.getClueIndex.bind(this);
@@ -23,7 +23,7 @@ class App extends Component {
   }
 
   getWordIndex() {
-    var index = this.getRandomIntInclusive(0, this.totalWords)
+    var index = this.getRandomIntInclusive(0, this.totalTimeWords)
     return index;
   }
 
@@ -32,9 +32,9 @@ class App extends Component {
     return index;
   }
 
-  createEntryRows(totalRows) {
+  createEntryRows(totalTimeRows) {
     let rows = []
-    for (let index = 0; index < totalRows; index++) {
+    for (let index = 0; index < totalTimeRows; index++) {
       rows.push(<EntryRow
         wordIndex={this.getWordIndex()}
         clue={this.getClueIndex()} />)
@@ -78,12 +78,44 @@ class Entry extends Component {
     this.state = {
       entry_value: "",
       bgColor: '',
+      disable: this.props.clue ? true : false,
+      startTimer: false,
+      time: 0,
+      totalTime: 10,
+      progressStyle: 'linear-gradient(90deg, white 1%, white 99%)',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.startTimer = this.startTimer.bind(this);
+    this.stopTimer = this.stopTimer.bind(this)
+  }
+
+  startTimer() {
+    this.timerID = setInterval(() => this.tick(), 1000);
+  }
+
+  stopTimer() {
+    clearInterval(this.timerID)
+    console.log("stop")
+  }
+
+  tick() {
+    this.setState({ time: this.state.time + 1 })
+    let style = 'linear-gradient(90deg, ' + this.state.bgColor + ' ' + this.state.time / this.state.totalTime * 100 + '%, white 1%)'
+    this.setState({ progressStyle: style })
+    if (this.state.time >= this.state.totalTime ) {
+      this.setState({ disable: true });
+      this.stopTimer();
+    }
   }
 
   handleChange(event) {
     this.setState({ entry_value: event.target.value });
+
+    if (!this.state.startTimer) {
+      this.setState({ startTimer: true })
+      this.startTimer();
+    }
+    
     if (event.target.value.toLowerCase() === this.props.word) {
       this.setState({ bgColor: "greenyellow" });
     } else {
@@ -97,6 +129,7 @@ class Entry extends Component {
       className += " clue";
     }
     return (
+          <div>
           <input 
             className={className}
             type='text'
@@ -104,8 +137,10 @@ class Entry extends Component {
             onChange={this.handleChange}
             style={{backgroundColor: this.state.bgColor}}
             readOnly={this.props.clue ? true : false}
-            disabled={this.props.clue ? true : false}
+            disabled={this.state.disable ? true : false}
             />
+            <p style={{background: this.state.progressStyle}}>{this.props.word}</p>
+            </div>
             
     );
   }
