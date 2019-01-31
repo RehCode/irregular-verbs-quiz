@@ -129,7 +129,7 @@ class Entry extends Component {
       let style = 'linear-gradient(90deg, greenyellow ' + this.state.time / this.state.totalTime * 100 + '%, white 1%)';
       this.setState({ progressStyle: style });
 
-      // this.setState({ disable: true });
+      this.setState({ disable: true });
       this.stopTimer();
       
     } else {
@@ -152,6 +152,7 @@ class Entry extends Component {
             style={this.props.clue ? {background: this.state.bgColor} : {background: this.state.progressStyle} }
             readOnly={this.props.clue ? true : false}
             disabled={this.state.disable ? true : false}
+            title={this.props.word}
             />
     );
   }
