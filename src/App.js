@@ -81,7 +81,7 @@ class Entry extends Component {
       disable: this.props.clue ? true : false,
       startTimer: false,
       time: 0,
-      totalTime: 20,
+      totalTime: 30,
       progressStyle: 'linear-gradient(90deg, white 1%, white 99%)',
     };
     this.handleChange = this.handleChange.bind(this);
@@ -90,6 +90,10 @@ class Entry extends Component {
   }
 
   startTimer() {
+    if (this.props.word.length > 5) {
+      let moreTime = (this.props.word.length - 5) * 3
+      this.setState({ totalTime: this.state.totalTime + moreTime })
+    }
     this.timerID = setInterval(() => this.tick(), 100);
   }
 
@@ -125,7 +129,7 @@ class Entry extends Component {
       let style = 'linear-gradient(90deg, greenyellow ' + this.state.time / this.state.totalTime * 100 + '%, white 1%)';
       this.setState({ progressStyle: style });
 
-      this.setState({ disable: true });
+      // this.setState({ disable: true });
       this.stopTimer();
       
     } else {
