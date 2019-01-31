@@ -81,7 +81,7 @@ class Entry extends Component {
       disable: this.props.clue ? true : false,
       startTimer: false,
       time: 0,
-      totalTime: 10,
+      totalTime: 20,
       progressStyle: 'linear-gradient(90deg, white 1%, white 99%)',
     };
     this.handleChange = this.handleChange.bind(this);
@@ -90,37 +90,48 @@ class Entry extends Component {
   }
 
   startTimer() {
-    this.timerID = setInterval(() => this.tick(), 1000);
+    this.timerID = setInterval(() => this.tick(), 100);
   }
 
   stopTimer() {
-    clearInterval(this.timerID)
-    console.log("stop")
+
+    clearInterval(this.timerID);
+    console.log("stop");
+
   }
 
   tick() {
-    this.setState({ time: this.state.time + 1 })
-    let style = 'linear-gradient(90deg, ' + this.state.bgColor + ' ' + this.state.time / this.state.totalTime * 100 + '%, white 1%)'
-    this.setState({ progressStyle: style })
+    this.setState({ time: this.state.time + 1 });
+
     if (this.state.time >= this.state.totalTime ) {
       this.setState({ disable: true });
       this.stopTimer();
     }
+
+    let style = 'linear-gradient(90deg, ' + this.state.bgColor + ' ' + this.state.time / this.state.totalTime * 100 + '%, white 1%)';
+    this.setState({ progressStyle: style });
   }
 
   handleChange(event) {
     this.setState({ entry_value: event.target.value });
-
     if (!this.state.startTimer) {
       this.setState({ startTimer: true })
       this.startTimer();
     }
-    
     if (event.target.value.toLowerCase() === this.props.word) {
+      
       this.setState({ bgColor: "greenyellow" });
+
+      let style = 'linear-gradient(90deg, greenyellow ' + this.state.time / this.state.totalTime * 100 + '%, white 1%)';
+      this.setState({ progressStyle: style });
+
+      this.setState({ disable: true });
+      this.stopTimer();
+      
     } else {
       this.setState({ bgColor: "darkgrey" });
     }
+    
   }
 
   render() {
