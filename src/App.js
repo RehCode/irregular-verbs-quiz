@@ -9,7 +9,7 @@ class App extends Component {
       entry_value: "",
       text: "",
     };
-    this.totalTimeWords = words_list.length;
+    this.totalWords = words_list.length;
     this.getRandomIntInclusive = this.getRandomIntInclusive.bind(this);
     this.getWordIndex = this.getWordIndex.bind(this);
     this.getClueIndex = this.getClueIndex.bind(this);
@@ -23,7 +23,7 @@ class App extends Component {
   }
 
   getWordIndex() {
-    var index = this.getRandomIntInclusive(0, this.totalTimeWords)
+    var index = this.getRandomIntInclusive(0, this.totalWords)
     return index;
   }
 
@@ -45,7 +45,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        {this.createEntryRows(25)}   
+        {this.createEntryRows(15)}   
       </div>
     );
   }
@@ -55,18 +55,30 @@ class EntryRow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      wordIndex: 0
+      score: 0,
+      text: "",
     };
+    this.setScore = this.setScore.bind(this);
   }
+  
+  setScore(score) {
+    this.setState({ score: this.state.score + score })
+  }
+
   render() {
     return (
       <div className="entrys">
         <Entry word={words_list[this.props.wordIndex][0]}
-               clue={this.props.clue === 0 ? true : false}/>
+               clue={this.props.clue === 0 ? true : false}
+               sendScore={this.setScore}/>
         <Entry word={words_list[this.props.wordIndex][1]} 
-               clue={this.props.clue === 1 ? true : false}/>
+               clue={this.props.clue === 1 ? true : false}
+               sendScore={this.setScore}/>
         <Entry word={words_list[this.props.wordIndex][2]} 
-               clue={this.props.clue === 2 ? true : false}/> 
+               clue={this.props.clue === 2 ? true : false}
+               sendScore={this.setScore}/>
+
+               <div>Score {this.state.score}</div>
       </div>
     );
   }
@@ -131,6 +143,8 @@ class Entry extends Component {
 
       this.setState({ disable: true });
       this.stopTimer();
+
+      this.props.sendScore(10);
       
     } else {
       this.setState({ bgColor: "darkgrey" });
