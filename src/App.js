@@ -140,19 +140,15 @@ class Entry extends Component {
       className += " clue";
     }
     return (
-          <div>
           <input 
             className={className}
             type='text'
             value={this.props.clue ? this.props.word: this.state.entry_value}
             onChange={this.handleChange}
-            style={{backgroundColor: this.state.bgColor}}
+            style={this.props.clue ? {background: this.state.bgColor} : {background: this.state.progressStyle} }
             readOnly={this.props.clue ? true : false}
             disabled={this.state.disable ? true : false}
             />
-            <p style={{background: this.state.progressStyle}}>{this.props.word}</p>
-            </div>
-            
     );
   }
 }
