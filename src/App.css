@@ -42,3 +42,18 @@ input {
 h2 {
   text-align: center;
 }
+
+.score.awesome {
+  color: black;
+  background-color: yellow;
+}
+
+.score.great {
+  color: black;
+  background-color: greenyellow;
+}
+
+.score.okay {
+  color: white;
+  background-color: brown;
+}

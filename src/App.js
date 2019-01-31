@@ -56,29 +56,49 @@ class EntryRow extends Component {
     super(props);
     this.state = {
       score: 0,
-      text: "",
+      used: false,
     };
     this.setScore = this.setScore.bind(this);
+    this.setUse = this.setUse.bind(this);
   }
   
   setScore(score) {
     this.setState({ score: this.state.score + score })
   }
 
+  setUse() {
+    this.setState({ used: true })
+  }
+
   render() {
+    const totalScore = this.state.score / 2
+    let classNameScore = "score";
+    if (this.state.used) {
+      if (totalScore >= 0.8) {
+        classNameScore += " awesome";
+      } else if (totalScore < 0.8 && totalScore >= 0.5) {
+        classNameScore += " great";
+      } else {
+        classNameScore += " okay";
+      }
+    }
+
     return (
       <div className="entrys">
         <Entry word={words_list[this.props.wordIndex][0]}
                clue={this.props.clue === 0 ? true : false}
-               sendScore={this.setScore}/>
+               sendScore={this.setScore}
+               setUse={this.setUse}/>
         <Entry word={words_list[this.props.wordIndex][1]} 
                clue={this.props.clue === 1 ? true : false}
-               sendScore={this.setScore}/>
+               sendScore={this.setScore}
+               setUse={this.setUse}/>
         <Entry word={words_list[this.props.wordIndex][2]} 
                clue={this.props.clue === 2 ? true : false}
-               sendScore={this.setScore}/>
+               sendScore={this.setScore}
+               setUse={this.setUse}/>
 
-               <div>Score {this.state.score}</div>
+               <div className={classNameScore} >{totalScore.toFixed(2)}</div>
       </div>
     );
   }
@@ -130,10 +150,13 @@ class Entry extends Component {
 
   handleChange(event) {
     this.setState({ entry_value: event.target.value });
+
     if (!this.state.startTimer) {
       this.setState({ startTimer: true })
       this.startTimer();
+      this.props.setUse();
     }
+
     if (event.target.value.toLowerCase() === this.props.word) {
       
       this.setState({ bgColor: "greenyellow" });
@@ -144,7 +167,8 @@ class Entry extends Component {
       this.setState({ disable: true });
       this.stopTimer();
 
-      this.props.sendScore(10);
+      let scorePercent = 1 - (this.state.time / this.state.totalTime)
+      this.props.sendScore(scorePercent);
       
     } else {
       this.setState({ bgColor: "darkgrey" });
