@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/irregular-verbs-quiz/precache-manifest.2562697ba0d562ee17a4b6842ba1fefc.js"
+  "/irregular-verbs-quiz/precache-manifest.53a7f22590a045fdab729551dbe25bd4.js"
 );
 
 workbox.clientsClaim();
