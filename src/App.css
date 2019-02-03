@@ -45,12 +45,12 @@ h2 {
 
 .score.awesome {
   color: black;
-  background-color: yellow;
+  background-color: greenyellow;
 }
 
 .score.great {
   color: black;
-  background-color: greenyellow;
+  background-color: yellow;
 }
 
 .score.okay {
